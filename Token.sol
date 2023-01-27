@@ -22,7 +22,7 @@ contract Token {
 
     uint256 public pricePerToken;
     mapping(address => uint256) public balances;
-    uint256 totalSupply;
+    uint256 public totalSupply;
 
     constructor(uint256 pricePerToken_) {
         pricePerToken = pricePerToken_;
