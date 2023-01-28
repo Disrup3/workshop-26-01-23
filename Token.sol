@@ -28,6 +28,10 @@ contract Token {
         pricePerToken = pricePerToken_;
     }
 
+    /**
+     * Opens an account if no balance and purchase some tokens.
+     * @param amount of tokens to buy
+     */
     function buyTokens(uint256 amount) public payable {
         require(msg.value == amount * pricePerToken, "Incorrect value");
         savedBalance += msg.value;
@@ -35,6 +39,10 @@ contract Token {
         balances[msg.sender] += amount;
     }
 
+    /**
+     * Sells tokens for the fixed price
+     * @param amount of tokens to sell
+     */
     function sellTokens(uint256 amount) public {
         require(balances[msg.sender] >= amount, "Not enough balance");
         savedBalance -= amount * pricePerToken;
@@ -44,6 +52,11 @@ contract Token {
         require(success == true, "Transaction failed");
     }
 
+    /**
+     * Transfers tokens to another account
+     * @param wallet to transfer
+     * @param amount of tokens to transfer
+     */
     function transferTokens(address wallet, uint256 amount) public {
         require(balances[msg.sender] >= amount, "Not enough balance");
         balances[msg.sender] -= amount;
