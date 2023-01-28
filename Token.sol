@@ -24,6 +24,14 @@ contract Token {
     mapping(address => uint256) public balances;
     uint256 public totalSupply;
 
+    event TokenBought(
+		uint256 amount
+	); 
+
+    event TokenSold(
+		uint256 amount
+	);
+
     constructor(uint256 pricePerToken_) {
         pricePerToken = pricePerToken_;
     }
@@ -37,6 +45,7 @@ contract Token {
         savedBalance += msg.value;
         totalSupply += amount;
         balances[msg.sender] += amount;
+        emit TokenBought(amount);
     }
 
     /**
@@ -50,6 +59,7 @@ contract Token {
         balances[msg.sender] -= amount;
         (bool success, ) = address(msg.sender).call{value: amount * pricePerToken}("");
         require(success == true, "Transaction failed");
+        emit TokenSold(amount);
     }
 
     /**
